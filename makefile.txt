@@ -1,0 +1,18 @@
+CC=gcc
+OBJECTS_MAIN=tree.o main.o
+FLAGS= -Wall -g -fPIC
+
+all: main	
+main: $(OBJECTS_MAIN) treeLib
+	$(CC) $(FLAGS) -o main $(OBJECTS_MAIN) ./treeLib.so -lm
+treeLib: $(OBJECTS_LIB)
+	$(CC) -shared -o treeLib.so $(OBJECTS_MAIN)
+tree.o: tree.c tree.h
+	$(CC) $(FLAGS) -c tree.c
+main.o: main.c tree.h 
+	$(CC) $(FLAGS) -c main.c
+
+.PHONY: clean all
+
+clean:
+	rm -f *.o *.so main
